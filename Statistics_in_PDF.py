@@ -56,7 +56,7 @@ class UserInterface:
         if file_name is not None:
             self.file_name = file_name
         else:
-            self.file_name = "../vacancies.csv"
+            self.file_name = "vacancies_medium.csv"
         self.profession_name = 'Программист'
 
 
@@ -474,9 +474,10 @@ def parse_row_vacancy(row_vacs: list) -> dict:
     return dict(zip(title, map(parse_html, row_vacs)))
 
 
-if __name__ == '__main__':
+def main() -> None:
+    global translator, ds, ui, title
     translator = Translator()
-    ui = UserInterface("../vacancies_by_year.csv")
+    ui = UserInterface()
     csv = CSV(ui.file_name)
     title, row_vacancies = csv.title, csv.rows
     vacancies = [Vacancy(parse_row_vacancy(row_vac)) for row_vac in row_vacancies]
@@ -485,4 +486,9 @@ if __name__ == '__main__':
     report = Report(statistics)
     # report.generate_excel('report.xlsx')
     # report.generate_image('graph.png')
-    # report.generate_pdf('report.pdf')
+    report.generate_pdf('report.pdf')
+
+
+if __name__ == '__main__':
+    main()
+
